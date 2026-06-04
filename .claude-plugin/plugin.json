@@ -2,8 +2,11 @@
   "name": "videolyze",
   "version": "0.1.0",
   "description": "Watch and analyze a video locally: ffmpeg frames + caption-first multi-language transcript with local faster-whisper fallback, freeform-driven analysis.",
-  "author": "Rafael Lopes",
+  "author": {
+    "name": "Rafael Lopes"
+  },
+  "homepage": "https://github.com/oreiasccp/videolyze",
+  "repository": "https://github.com/oreiasccp/videolyze",
   "license": "MIT",
-  "commands": ["./commands/videolyze.md"],
-  "hooks": "./hooks/hooks.json"
+  "keywords": ["video", "analyze", "youtube", "transcription", "whisper", "captions", "yt-dlp", "ffmpeg", "multimodal", "frames"]
 }
