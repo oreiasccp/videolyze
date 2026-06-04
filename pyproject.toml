@@ -1,0 +1,22 @@
+[project]
+name = "videolyze"
+version = "0.1.0"
+description = "Watch and analyze a video locally: ffmpeg frames + caption-first multi-language transcript with local faster-whisper fallback, freeform-driven analysis."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Rafael Lopes" }]
+requires-python = ">=3.10"
+dependencies = [
+    "yt-dlp>=2025.11.0",
+    "faster-whisper>=1.1.0",
+    "defusedxml>=0.7.1",
+    "nvidia-cublas-cu12; platform_system != 'Darwin'",
+    "nvidia-cudnn-cu12>=9.0.0; platform_system != 'Darwin'",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
