@@ -25,7 +25,9 @@ def frame_count_for_duration(duration_s: float, max_frames: int = MAX_FRAMES) ->
 def fps_for(duration_s: float, frame_budget: int) -> float:
     if duration_s <= 0:
         return MAX_FPS
-    return min(MAX_FPS, max(0.1, frame_budget / duration_s))
+    # No lower floor: a floor would override the frame budget on long videos and
+    # extract far more frames than requested. Cap only at MAX_FPS.
+    return min(MAX_FPS, frame_budget / duration_s)
 
 
 def build_ffmpeg_cmd(input_path: str, output_template: str, fps: float, width: int,
@@ -56,8 +58,19 @@ def extract_frames(input_path: str, out_dir: str, duration_s: float, width: int 
     cmd = build_ffmpeg_cmd(input_path, template, fps, width, start, end)
     subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     frames = sorted(Path(out_dir).glob("frame_*.jpg"))
+    # Guarantee the budget cap: ffmpeg's fps rounding can yield a few extra frames.
+    # Keep absolute timestamps tied to the original extraction index (idx / fps).
+    keep_idx = set(range(len(frames)))
+    if len(frames) > budget and budget > 0:
+        step = len(frames) / budget
+        keep_idx = {int(i * step) for i in range(budget)}
+        for idx, fp in enumerate(frames):
+            if idx not in keep_idx:
+                fp.unlink(missing_ok=True)
     out = []
     for idx, fp in enumerate(frames):
+        if idx not in keep_idx:
+            continue
         t = base + idx / fps
         out.append({"path": str(fp), "t": round(t, 1)})
     return out
