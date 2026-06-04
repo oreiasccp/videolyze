@@ -1,11 +1,21 @@
 {
   "name": "videolyze",
-  "owner": "oreiasccp",
+  "metadata": {
+    "description": "Watch and analyze a video locally: frames + caption-first transcript with local Whisper."
+  },
+  "owner": {
+    "name": "Rafael Lopes"
+  },
   "plugins": [
     {
       "name": "videolyze",
+      "description": "Watch and analyze a video locally with frames + caption-first transcript and local faster-whisper.",
+      "author": {
+        "name": "Rafael Lopes"
+      },
       "source": "./",
-      "description": "Watch and analyze a video locally with frames + caption-first transcript and local Whisper."
+      "category": "productivity",
+      "homepage": "https://github.com/oreiasccp/videolyze"
     }
   ]
 }
