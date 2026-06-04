@@ -1,0 +1,11 @@
+{
+  "name": "videolyze",
+  "owner": "oreiasccp",
+  "plugins": [
+    {
+      "name": "videolyze",
+      "source": "./",
+      "description": "Watch and analyze a video locally with frames + caption-first transcript and local Whisper."
+    }
+  ]
+}
