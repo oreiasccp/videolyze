@@ -16,3 +16,12 @@ def test_build_download_cmd_has_format_and_output():
     assert "height<=720" in joined
     assert "--write-info-json" in joined
     assert "/tmp/out/video.%(ext)s" in joined
+    assert "--cookies-from-browser" not in joined  # cookieless by default
+
+
+def test_build_download_cmd_with_cookies():
+    cmd = build_download_cmd("https://youtu.be/abc", "/tmp/v.%(ext)s", cookies_browser="chrome")
+    assert "--cookies-from-browser" in cmd
+    assert "chrome" in cmd
+    # url stays last, after the -- separator
+    assert cmd[-1] == "https://youtu.be/abc"
